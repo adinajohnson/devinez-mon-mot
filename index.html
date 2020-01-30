@@ -51,7 +51,6 @@
     </div>
 
     <nav>
-        <a class="bigger-target" href="./board.html">🏆 Board</a>
         <a class="bigger-target" href="./README.html">à propos</a>
     </nav>
 </header>
@@ -120,51 +119,6 @@
 
             </form>
 
-            <form
-                class="leaderboard-form"
-                v-if="shouldShowSubmitName()"
-                v-on:submit.prevent="submitToLeaderboard"
-                v-cloak
-            >
-                <br/>
-                <label>
-                    enter your name for the completion board<br/>
-                    <input
-                        autocomplete="on"
-                        required
-                        minlength="1"
-                        maxlength="128"
-                        type="text"
-                        list="usernames"
-                        v-bind:disabled="leaderboardRequest"
-                        v-bind:value="username"
-                        v-on:input="setUsername"
-                        v-focus
-                    />
-                </label>
-                <datalist id="usernames" v-if="usernamesUsed.length > 1">
-                    <option v-for="name in usernamesUsed" v-bind:value="name">
-                    </option>
-                </datalist>
-                <input
-                    id="submit-to-leaderboard"
-                    type="submit"
-                    value="submit"
-                    v-bind:disabled="leaderboardRequest"
-                />
-                <div class="error" v-if="leaderSubmitError" style="margin: 5px 0px;">
-                    {{leaderSubmitError}}
-                </div>
-            </form>
-
-            <div class="leaderboard" v-if="submitTime" v-cloak>
-                Go to the
-                <a v-bind:href="`./board.html?difficulty=${difficulty}`">Completion board for "{{difficulty}}" word</a>
-                <br/><div class="warning">
-                    <strong>WARNING:</strong> may contain spoilers or inappropriate names.
-                </div>
-            </div>
-
             <h4 v-if="winTime && !playDate">
                 Revenez demain pour un autre mot<span v-if="difficulty === 'hard'">.</span>
                 <span v-if="difficulty === 'normal'">ou
@@ -213,6 +167,5 @@
 <!-- Uncomment to run tests in browser -->
 <!-- <script src="./tests.js"></script> -->
 
-<script src="/assets/js/googleAnalytics.js"></script>
 </body>
 </html>

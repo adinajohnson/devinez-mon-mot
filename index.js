@@ -269,9 +269,9 @@ function generateGuessList(beforeOrAfter, guesses, word) {
 
     function getBeforeOrAfterGuesses(guess) {
         if (beforeOrAfter === BEFORE) {
-            return word.localeCompare(guess, 'fr', {'sensitivity': 'base'}) > 0;
+            return word.localeCompare(guess, 'fr', {'sensitivity': 'base'}) < 0;
         }
-        return word.localeCompare(guess, 'fr', {'sensitivity': 'base'}) < 0;
+        return word.localeCompare(guess, 'fr', {'sensitivity': 'base'}) > 0;
     }
 }
 
@@ -393,7 +393,7 @@ function makeGuess() {
 }
 
 function sanitizeGuess(guess) {
-    return guess.toLowerCase().trim().replace(/[^a-zéèàáâôîæœ]/g, '');
+    return guess.toLowerCase().trim().replace(/[^a-zà-ÿ]/g, '');
 }
 
 function getInvalidReason(guess) {
@@ -422,7 +422,6 @@ function getComparisonToTargetWord(guess) {
     if (guess === this.word) {
         return WIN;
     }
-    console.log(this.word);
     return this.word.localeCompare(guess, 'fr', {'sensitivity': 'base'}) < 0 ? BEFORE : AFTER;
 }
 
