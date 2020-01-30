@@ -151,7 +151,7 @@ form {
 }
 #after-label::before,
 #before-label::before {
-    content: 'my word';
+    content: 'mon mot';
     position: absolute;
     bottom: 100%;
     left: 0;

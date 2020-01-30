@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Guess my word</title>
+<title>Devinez mon mot</title>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="./index.css"/>
@@ -18,7 +18,7 @@
 <header>
     <div class="controls">
         <h1>
-            <a href="./" class="home">Guess my word</a>
+            <a href="./" class="home">Devinez mon mot</a>
         </h1>
 
         <select
@@ -29,43 +29,42 @@
             v-cloak
         >
             <option value="normal">normal</option>
-            <option value="hard">hard</option>
+            <option value="hard">difficile</option>
         </select>
 
         <button v-on:click="toggleShowDate" v-cloak title="play passed days">📅</button>
 
         <div v-cloak v-if="showDatePicker">
-            <div style="margin-bottom: 10px; font-style: italic;">play a previous day for fun</div>
+            <div style="margin-bottom: 10px; font-style: italic;">jouer un ancien jour pour le fun</div>
             <div class="date-picker">
-                <button v-on:click="backMonth" title="back a month">&lt;m</button><button v-on:click="backWeek" title="back a month">&lt;w</button><button
-                    v-on:click="backDay" title="back a day">&lt;d</button>
+                <button v-on:click="backMonth" title="revenir un mois en arrière">&lt;m</button><button v-on:click="backWeek" title="revenir une semaine en arrière">&lt;s</button><button
+                    v-on:click="backDay" title="revenir un jour en arrière">&lt;j</button>
                 <div class="display" v-bind:class="{
-                        'centered': ['Today', 'First day 🎂'].includes(getShortDayString()),
+                        'centered': ['Aujourd’hui', 'Premier jour 🎂'].includes(getShortDayString()),
                     }">
                     {{getShortDayString()}}
                 </div>
-                <button v-on:click="forwardDay" title="forward a day" v-bind:disabled="!playDate">d&gt;</button><button v-on:click="forwardWeek" title="forward a week" v-bind:disabled="!playDate">w&gt;</button><button
-                    v-on:click="forwardMonth" title="forward a month" v-bind:disabled="!playDate">m&gt;</button>
+                <button v-on:click="forwardDay" title="avancer d'un jour" v-bind:disabled="!playDate">j&gt;</button><button v-on:click="forwardWeek" title="avancer d'une semaine" v-bind:disabled="!playDate">s&gt;</button><button
+                    v-on:click="forwardMonth" title="avancer d'un mois" v-bind:disabled="!playDate">m&gt;</button>
             </div>
         </div>
     </div>
 
     <nav>
         <a class="bigger-target" href="./board.html">🏆 Board</a>
-        <a class="bigger-target" href="./README.html">about</a>
+        <a class="bigger-target" href="./README.html">à propos</a>
     </nav>
 </header>
 
 <p style="margin-bottom: 24px">
-    I'm thinking of an English word. Make guesses below and I'll tell you if my word is alphabetically before or after your
-    guess.
+    Je pense à un mot en français. Faites des essais ci-dessous, et je vous dirais si mon mot est alphabétiqument avant ou après votre essai.
 </p>
 
-<h3 v-if="false" style="margin-left: 78px;">Loading...</h3>
+<h3 v-if="false" style="margin-left: 78px;">Chargement...</h3>
 <div v-cloak>
     <div id="after-guesses-container" v-if="afterGuesses.length">
-        <label id="after-label" class="fixed-width-label" title="My word is after these words">
-            is after:
+        <label id="after-label" class="fixed-width-label" title="Mon mot est après ces mots">
+            est après:
         </label>
         <div>
             <!-- FIXME how reuse the guess template? -->
@@ -83,15 +82,15 @@
     <div id="guesser">
         <label class="fixed-width-label"><!-- cheap spacing--></label>
         <div>
-            <h2 v-if="winTime">You got it! 🎉🎉🎉</h2>
+            <h2 v-if="winTime">Bravo ! 🎉🎉🎉</h2>
             <p v-if="winTime">
-                ({{guesses.length}} guesses in {{getFormattedTime(winTime - startTime)}})
+                ({{guesses.length}} essais en {{getFormattedTime(winTime - startTime)}})
             </p>
-            <h3 v-if="gaveUpTime">My word is:</h3>
+            <h3 v-if="gaveUpTime">Mon mot est :</h3>
             <form name="guesser" v-on:submit.prevent="makeGuess" autocomplete="off" autocorrect="off">
                 <input
                     id="new-guess"
-                    placeholder="type a word then -->"
+                    placeholder="tapez un mot puis -->"
                     type="text"
                     autocomplete="off"
                     autocorrect="off"
@@ -102,7 +101,7 @@
                 <input
                     id="submit-guess"
                     type="submit"
-                    value="guess"
+                    value="deviner"
                     v-bind:disabled="winTime || gaveUpTime"
                 />
 
@@ -112,7 +111,7 @@
                     v-on:click="giveUp"
                     v-if="guesses.length && !gaveUpTime"
                 >
-                    give up :(
+                    abandonner :(
                 </a>
 
                 <div class="error" v-if="guessError" style="margin: 5px 0px;">
@@ -167,27 +166,27 @@
             </div>
 
             <h4 v-if="winTime && !playDate">
-                Come back tomorrow for a new word<span v-if="difficulty === 'hard'">.</span>
-                <span v-if="difficulty === 'normal'">or
-                    <a href="#" v-on:click="toggleDifficulty">try a hard word</a>?
+                Revenez demain pour un autre mot<span v-if="difficulty === 'hard'">.</span>
+                <span v-if="difficulty === 'normal'">ou
+                    <a href="#" v-on:click="toggleDifficulty">essayez un mot difficile</a> ?
                 </span>
             </h4>
 
             <h4 v-if="gaveUpTime">
-                better luck tomorrow
-                <span v-if="difficulty === 'hard'">or
+                plus de chance demain
+                <span v-if="difficulty === 'hard'">ou
                     <a
                         href="#"
                         v-on:click="toggleDifficulty"
                     >
-                        try a normal word</a>?
+                        essayez un mot normal </a>?
                 </span>
             </h4>
         </div>
     </div>
     <div id="before-guesses-container" v-if="beforeGuesses.length">
-        <label id="before-label" class="fixed-width-label" title="My word is before these words">
-            is before:
+        <label id="before-label" class="fixed-width-label" title="Mon mot est avant ces mots:">
+            est avant:
         </label>
         <div id="before-guesses">
             <div

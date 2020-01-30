@@ -398,13 +398,13 @@ function sanitizeGuess(guess) {
 
 function getInvalidReason(guess) {
     if (!guess) {
-        return "Guess can't be empty.";
+        return "L’essai ne peut pas être vide.";
     }
     if (!isAValidWord(guess)) {
-        return 'Guess must be an English word. (Scrabble-acceptable)';
+        return 'L’essai doit être un mot en français. (acceptable au Scrabble)';
     }
     if (this.guesses.includes(guess)) {
-        return "Oops, you've already guessed that word.";
+        return "Oups, vous avez déjà essayé ce mot.";
     }
     return '';
 }
@@ -442,7 +442,7 @@ function insertIntoSortedArray(array, newElement) {
 }
 
 function giveUp() {
-    if (!confirm('Really give up?')) {
+    if (!confirm('Vraiment abandonner ?')) {
         return;
     }
     this.guessValue = this.word;
@@ -458,7 +458,7 @@ function toggleDifficulty() {
         return;
     }
     if (haveMadeGuesses && !haveWonOrGivenUp && !this.isLocalStorageAvailable
-        && !confirm('Change difficulty and lose current guesses?')) {
+        && !confirm('Modifier la difficulté et perdre les essais en cours ?')) {
         this.$forceUpdate(); // need to make sure the changer dropdown is in the correct state
         return;
     }
@@ -560,10 +560,10 @@ function toggleShowDate() {
 }
 
 const SHORT_WEEK_DAY_BY_INDEX = [
-    'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
+    'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim',
 ];
 const SHORT_MONTH_BY_INDEX = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Dec',
 ];
 const MILLISECONDS_IN_DAY = 60 * 60 * 24 * 1000;
 const MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
@@ -649,10 +649,10 @@ function getShortDayString() {
 
 function getSpecialDateString(playDate) {
     if (isPlayDateToday(playDate)) {
-        return 'Today';
+        return 'Aujourd’hui';
     }
     if (datesMatch(playDate, FIRST_DATE)) {
-        return 'First day 🎂';
+        return 'Premier jour 🎂';
     }
     return '';
 }
